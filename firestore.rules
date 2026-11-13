@@ -1,0 +1,453 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net (Default Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- HARDENED GLOBAL HELPERS ---
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isBootstrappedAdmin() {
+      return isSignedIn() &&
+             'email' in request.auth.token &&
+             request.auth.token.email == 'nmd634384@gmail.com' &&
+             'email_verified' in request.auth.token &&
+             request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isBootstrappedAdmin() ||
+             (isSignedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid)));
+    }
+
+    function isOptionalString(data, field, maxLen) {
+      return !(field in data) || data[field] == null || (data[field] is string && data[field].size() <= maxLen);
+    }
+
+    function isOptionalInt(data, field, minVal, maxVal) {
+      return !(field in data) || data[field] == null || (data[field] is int && data[field] >= minVal && data[field] <= maxVal);
+    }
+
+    // --- VALIDATION BLUEPRINTS ---
+    function isValidUser(data, userId) {
+      return data.userId is string && data.userId == userId &&
+             data.username is string && data.username.size() >= 2 && data.username.size() <= 30 &&
+             data.role is string && data.role in ['player', 'organizer', 'admin'] &&
+             (!('termsAccepted' in data) || data.termsAccepted is bool);
+    }
+
+    function isValidAlert(data, userId) {
+      return data.userId is string && data.userId == userId &&
+             data.title is string && data.title.size() >= 1 && data.title.size() <= 100 &&
+             data.message is string && data.message.size() >= 1 && data.message.size() <= 300 &&
+             isOptionalString(data, 'tournamentId', 128) &&
+             isOptionalString(data, 'matchId', 128) &&
+             data.isRead is bool;
+    }
+
+    function isValidPlayerStat(data, userId) {
+      return data.userId is string && data.userId == userId &&
+             data.gamerTag is string && data.gamerTag.size() >= 2 && data.gamerTag.size() <= 30 &&
+             isOptionalString(data, 'primaryGame', 40) &&
+             data.matchesPlayed is int && data.matchesPlayed >= 0 &&
+             data.wins is int && data.wins >= 0 &&
+             data.rating is int && data.rating >= 0 &&
+             data.isPublic is bool && data.isPublic == true;
+    }
+
+    function isValidTournament(data) {
+      return data.title is string && data.title.size() >= 3 && data.title.size() <= 120 &&
+             data.game is string && data.game.size() >= 2 && data.game.size() <= 60 &&
+             data.format is string && data.format in ['Single Elimination', 'Double Elimination', 'Round Robin'] &&
+             data.participationType is string && data.participationType in ['Individual', 'Team'] &&
+             data.maxParticipants is int && data.maxParticipants >= 2 && data.maxParticipants <= 128 &&
+             data.participantCount is int && data.participantCount >= 0 && data.participantCount <= data.maxParticipants &&
+             data.organizerId is string && isValidId(data.organizerId) &&
+             data.inviteCode is string && data.inviteCode.size() >= 4 && data.inviteCode.size() <= 32 &&
+             data.status is string && data.status in ['Open', 'In Progress', 'Completed', 'Cancelled'] &&
+             isOptionalString(data, 'prizePoolText', 80) &&
+             isOptionalInt(data, 'prizePoolAmount', 0, 10000000) &&
+             isOptionalString(data, 'prizeSplitNote', 120) &&
+             data.isPublic is bool && data.isPublic == true;
+    }
+
+    function isValidParticipant(data, tournamentId) {
+      return data.tournamentId is string && data.tournamentId == tournamentId &&
+             data.userId is string && isValidId(data.userId) &&
+             data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 40 &&
+             data.rankingMetric is int && data.rankingMetric >= 0 && data.rankingMetric <= 100000 &&
+             data.seedNumber is int && data.seedNumber >= 0 && data.seedNumber <= 128;
+    }
+
+    function isValidTeam(data, tournamentId) {
+      return data.tournamentId is string && data.tournamentId == tournamentId &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 40 &&
+             data.teamCode is string && data.teamCode.size() >= 4 && data.teamCode.size() <= 20 &&
+             data.captainUserId is string && isValidId(data.captainUserId) &&
+             data.memberIds is list && data.memberIds.size() >= 1 && data.memberIds.size() <= 10 &&
+             data.memberIds[0] is string &&
+             (!('memberNames' in data) || (data.memberNames is list && data.memberNames.size() <= 10 && (data.memberNames.size() == 0 || data.memberNames[0] is string))) &&
+             isOptionalInt(data, 'aggregatedStrength', 0, 100000) &&
+             data.status is string && data.status in ['Open', 'Locked'];
+    }
+
+    function isValidMatch(data, tournamentId) {
+      return data.tournamentId is string && data.tournamentId == tournamentId &&
+             data.organizerId is string && data.organizerId.size() >= 1 && data.organizerId.size() <= 128 &&
+             data.roundNumber is int && data.roundNumber >= 1 && data.roundNumber <= 10 &&
+             data.roundName is string && data.roundName.size() >= 1 && data.roundName.size() <= 40 &&
+             data.matchNumber is int && data.matchNumber >= 0 && data.matchNumber <= 128 &&
+             data.status is string && data.status in ['Pending', 'Scheduled', 'Ready', 'Awaiting Results', 'Disputed', 'Completed', 'Cancelled'] &&
+             (!('score1' in data) || data.score1 == null || (data.score1 is int && data.score1 >= 0 && data.score1 <= 999)) &&
+             (!('score2' in data) || data.score2 == null || (data.score2 is int && data.score2 >= 0 && data.score2 <= 999)) &&
+             (!('proofNote' in data) || data.proofNote == null || (data.proofNote is string && data.proofNote.size() <= 300)) &&
+             (!('proofImageUri' in data) || data.proofImageUri == null || (data.proofImageUri is string && data.proofImageUri.size() <= 500)) &&
+             (!('nextMatchSlot' in data) || data.nextMatchSlot == null || (data.nextMatchSlot is int && data.nextMatchSlot >= 0 && data.nextMatchSlot <= 2)) &&
+             (!('auditLog' in data) || (data.auditLog is list && data.auditLog.size() <= 30));
+    }
+
+    function isValidMessage(data, tournamentId) {
+      return data.tournamentId is string && data.tournamentId == tournamentId &&
+             data.senderId is string && isValidId(data.senderId) &&
+             data.senderName is string && data.senderName.size() >= 1 && data.senderName.size() <= 40 &&
+             data.text is string && data.text.size() >= 1 && data.text.size() <= 300 &&
+             data.isReported is bool &&
+             (!('senderRole' in data) || (data.senderRole is string && data.senderRole in ['organizer', 'captain', 'admin', 'player'])) &&
+             (!('channel' in data) || (data.channel is string && data.channel in ['lobby', 'captains'])) &&
+             (!('isPinned' in data) || data.isPinned is bool) &&
+             isOptionalString(data, 'teamName', 50) &&
+             isOptionalString(data, 'reportReason', 200);
+    }
+
+    function isValidReport(data) {
+      return data.type is string && data.type in ['Match Dispute', 'Chat Abuse', 'Tournament Issue'] &&
+             data.tournamentId is string && data.tournamentId.size() <= 128 &&
+             isOptionalString(data, 'matchId', 128) &&
+             data.reporterId is string && isValidId(data.reporterId) &&
+             isOptionalString(data, 'reporterName', 50) &&
+             data.reason is string && data.reason.size() >= 3 && data.reason.size() <= 300 &&
+             data.status is string && data.status in ['Open', 'Resolved', 'Dismissed'] &&
+             isOptionalString(data, 'resolutionNote', 300);
+    }
+
+    // --- COLLECTIONS ---
+    match /admins/{adminId} {
+      allow get: if isSignedIn() && request.auth.uid == adminId;
+      allow list, write: if false;
+    }
+
+    match /users/{userId} {
+      // Strict PII Isolation (users contain email & contactInfo)
+      allow get, list: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+
+      allow create: if isSignedIn() &&
+                       isValidId(userId) &&
+                       request.auth.uid == userId &&
+                       isValidUser(incoming(), userId) &&
+                       (incoming().role != 'admin' || isBootstrappedAdmin()) &&
+                       incoming().createdAt is timestamp &&
+                       incoming().createdAt <= request.time &&
+                       incoming().updatedAt is timestamp &&
+                       incoming().updatedAt <= request.time;
+
+      allow update: if isSignedIn() &&
+                       isValidId(userId) &&
+                       isValidUser(incoming(), userId) &&
+                       incoming().userId == existing().userId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().updatedAt is timestamp &&
+                       incoming().updatedAt <= request.time &&
+                       (
+                         isAdmin() ||
+                         (
+                           request.auth.uid == userId &&
+                           incoming().role == existing().role
+                         )
+                       );
+
+      allow delete: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+
+      match /alerts/{alertId} {
+        allow get, list: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+        allow create: if isSignedIn() &&
+                         isValidId(alertId) &&
+                         isValidAlert(incoming(), userId) &&
+                         incoming().createdAt is timestamp &&
+                         incoming().createdAt <= request.time;
+        allow update: if isSignedIn() &&
+                         isValidId(alertId) &&
+                         request.auth.uid == userId &&
+                         isValidAlert(incoming(), userId) &&
+                         incoming().createdAt == existing().createdAt &&
+                         incoming().diff(existing()).affectedKeys().hasOnly(['isRead']);
+        allow delete: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      }
+    }
+
+    match /playerStats/{userId} {
+      allow get: if isSignedIn() && isValidId(userId);
+      allow list: if isSignedIn() && resource.data.isPublic == true;
+      allow create: if isSignedIn() &&
+                       isValidId(userId) &&
+                       request.auth.uid == userId &&
+                       isValidPlayerStat(incoming(), userId) &&
+                       incoming().updatedAt is timestamp &&
+                       incoming().updatedAt <= request.time;
+      allow update: if isSignedIn() &&
+                       isValidId(userId) &&
+                       isValidPlayerStat(incoming(), userId) &&
+                       (isAdmin() || request.auth.uid == userId) &&
+                       incoming().updatedAt is timestamp &&
+                       incoming().updatedAt <= request.time;
+      allow delete: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+    }
+
+    match /tournaments/{tournamentId} {
+      allow get: if isSignedIn() && isValidId(tournamentId);
+      allow list: if isSignedIn() && resource.data.isPublic == true;
+
+      allow create: if isSignedIn() &&
+                       isValidId(tournamentId) &&
+                       isValidTournament(incoming()) &&
+                       incoming().organizerId == request.auth.uid &&
+                       incoming().status == 'Open' &&
+                       incoming().participantCount == 0 &&
+                       incoming().createdAt is timestamp &&
+                       incoming().createdAt <= request.time &&
+                       incoming().updatedAt is timestamp &&
+                       incoming().updatedAt <= request.time;
+
+      allow update: if isSignedIn() &&
+                       isValidId(tournamentId) &&
+                       isValidTournament(incoming()) &&
+                       incoming().organizerId == existing().organizerId &&
+                       incoming().createdAt == existing().createdAt &&
+                       incoming().updatedAt is timestamp &&
+                       incoming().updatedAt <= request.time &&
+                       (
+                         isAdmin() ||
+                         (
+                           existing().organizerId == request.auth.uid &&
+                           existing().status != 'Completed' &&
+                           existing().status != 'Cancelled' &&
+                           incoming().diff(existing()).affectedKeys().hasOnly([
+                             'title', 'description', 'rules', 'status', 'seedingMode',
+                             'roomId', 'roomPassword', 'maxParticipants', 'matchDurationMinutes',
+                             'registrationDeadlineText', 'startTimeText',
+                             'prizePoolText', 'prizePoolAmount', 'prizeSplitNote', 'updatedAt'
+                           ])
+                         ) ||
+                         (
+                           existing().status == 'Open' &&
+                           incoming().diff(existing()).affectedKeys().hasOnly(['participantCount', 'updatedAt'])
+                         )
+                       );
+
+      allow delete: if isAdmin() || (isSignedIn() && existing().organizerId == request.auth.uid && existing().status == 'Open');
+
+      match /participants/{participantId} {
+        allow get: if isSignedIn() && isValidId(participantId);
+        allow list: if isSignedIn() && resource.data.tournamentId == tournamentId;
+
+        allow create: if isSignedIn() &&
+                         isValidId(participantId) &&
+                         isValidParticipant(incoming(), tournamentId) &&
+                         incoming().userId == request.auth.uid &&
+                         incoming().registeredAt is timestamp &&
+                         incoming().registeredAt <= request.time &&
+                         incoming().updatedAt is timestamp &&
+                         incoming().updatedAt <= request.time &&
+                         exists(/databases/$(database)/documents/tournaments/$(tournamentId)) &&
+                         get(/databases/$(database)/documents/tournaments/$(tournamentId)).data.status == 'Open';
+
+        allow update: if isSignedIn() &&
+                         isValidId(participantId) &&
+                         isValidParticipant(incoming(), tournamentId) &&
+                         incoming().userId == existing().userId &&
+                         incoming().tournamentId == existing().tournamentId &&
+                         incoming().registeredAt == existing().registeredAt &&
+                         incoming().updatedAt is timestamp &&
+                         incoming().updatedAt <= request.time &&
+                         (
+                           isAdmin() ||
+                           (
+                             existing().userId == request.auth.uid &&
+                             get(/databases/$(database)/documents/tournaments/$(tournamentId)).data.status == 'Open' &&
+                             incoming().diff(existing()).affectedKeys().hasOnly([
+                               'displayName', 'teamId', 'teamName', 'gameFields',
+                               'publicStatLabel', 'sensitiveIdField', 'rankingMetric',
+                               'auditLog', 'updatedAt'
+                             ])
+                           ) ||
+                           (
+                             get(/databases/$(database)/documents/tournaments/$(tournamentId)).data.organizerId == request.auth.uid &&
+                             incoming().diff(existing()).affectedKeys().hasOnly(['seedNumber', 'updatedAt'])
+                           )
+                         );
+
+        allow delete: if isAdmin() || (
+          isSignedIn() &&
+          existing().userId == request.auth.uid &&
+          get(/databases/$(database)/documents/tournaments/$(tournamentId)).data.status == 'Open'
+        );
+      }
+
+      match /teams/{teamId} {
+        allow get: if isSignedIn() && isValidId(teamId);
+        allow list: if isSignedIn() && resource.data.tournamentId == tournamentId;
+
+        allow create: if isSignedIn() &&
+                         isValidId(teamId) &&
+                         isValidTeam(incoming(), tournamentId) &&
+                         incoming().captainUserId == request.auth.uid &&
+                         incoming().createdAt is timestamp &&
+                         incoming().createdAt <= request.time &&
+                         exists(/databases/$(database)/documents/tournaments/$(tournamentId));
+
+        allow update: if isSignedIn() &&
+                         isValidId(teamId) &&
+                         isValidTeam(incoming(), tournamentId) &&
+                         incoming().tournamentId == existing().tournamentId &&
+                         incoming().captainUserId == existing().captainUserId &&
+                         incoming().createdAt == existing().createdAt &&
+                         (
+                           isAdmin() ||
+                           (
+                             existing().captainUserId == request.auth.uid &&
+                             incoming().diff(existing()).affectedKeys().hasOnly([
+                               'name', 'status', 'memberIds', 'memberNames', 'aggregatedStrength'
+                             ])
+                           ) ||
+                           (
+                             existing().status == 'Open' &&
+                             incoming().diff(existing()).affectedKeys().hasOnly([
+                               'memberIds', 'memberNames', 'aggregatedStrength'
+                             ])
+                           )
+                         );
+
+        allow delete: if isAdmin() || (isSignedIn() && existing().captainUserId == request.auth.uid);
+      }
+
+      match /matches/{matchId} {
+        allow get: if isSignedIn() && isValidId(matchId);
+        allow list: if isSignedIn() && resource.data.tournamentId == tournamentId;
+
+        allow create: if isSignedIn() &&
+                         isValidId(matchId) &&
+                         isValidMatch(incoming(), tournamentId) &&
+                         incoming().createdAt is timestamp &&
+                         incoming().updatedAt is timestamp &&
+                         exists(/databases/$(database)/documents/tournaments/$(tournamentId)) &&
+                         (
+                           isAdmin() ||
+                           get(/databases/$(database)/documents/tournaments/$(tournamentId)).data.organizerId == request.auth.uid
+                         );
+
+        allow update: if isSignedIn() &&
+                         isValidId(matchId) &&
+                         isValidMatch(incoming(), tournamentId) &&
+                         incoming().tournamentId == existing().tournamentId &&
+                         incoming().organizerId == existing().organizerId &&
+                         incoming().roundNumber == existing().roundNumber &&
+                         incoming().matchNumber == existing().matchNumber &&
+                         incoming().createdAt == existing().createdAt &&
+                         incoming().updatedAt is timestamp &&
+                         (
+                           isAdmin() ||
+                           existing().organizerId == request.auth.uid ||
+                           (
+                             existing().status != 'Completed' &&
+                             existing().status != 'Cancelled' &&
+                             (request.auth.uid == existing().participant1UserId || request.auth.uid == existing().participant2UserId) &&
+                             (!('nextMatchId' in existing()) || incoming().nextMatchId == existing().nextMatchId) &&
+                             (!('nextMatchSlot' in existing()) || incoming().nextMatchSlot == existing().nextMatchSlot)
+                           ) ||
+                           (
+                             // Advancing winner into TBD next match slot upon match completion
+                             existing().status in ['Pending', 'Scheduled'] &&
+                             (existing().participant1Id == '' || existing().participant2Id == '') &&
+                             (!('winnerParticipantId' in incoming()) || incoming().winnerParticipantId == '') &&
+                             (!('score1' in existing()) || incoming().score1 == existing().score1) &&
+                             (!('score2' in existing()) || incoming().score2 == existing().score2)
+                           )
+                         );
+
+        allow delete: if isAdmin();
+      }
+
+      match /messages/{messageId} {
+        allow get: if isSignedIn() && isValidId(messageId);
+        allow list: if isSignedIn() && resource.data.tournamentId == tournamentId;
+
+        allow create: if isSignedIn() &&
+                         isValidId(messageId) &&
+                         isValidMessage(incoming(), tournamentId) &&
+                         incoming().senderId == request.auth.uid &&
+                         incoming().isReported == false &&
+                         incoming().createdAt is timestamp &&
+                         incoming().createdAt <= request.time;
+
+        allow update: if isSignedIn() &&
+                         isValidId(messageId) &&
+                         isValidMessage(incoming(), tournamentId) &&
+                         incoming().tournamentId == existing().tournamentId &&
+                         incoming().senderId == existing().senderId &&
+                         incoming().createdAt == existing().createdAt &&
+                         (
+                           isAdmin() ||
+                           (
+                             get(/databases/$(database)/documents/tournaments/$(tournamentId)).data.organizerId == request.auth.uid &&
+                             incoming().diff(existing()).affectedKeys().hasOnly(['isPinned', 'isReported', 'reportReason'])
+                           ) ||
+                           incoming().diff(existing()).affectedKeys().hasOnly(['isReported', 'reportReason'])
+                         );
+
+        allow delete: if isAdmin() || (isSignedIn() && existing().senderId == request.auth.uid);
+      }
+    }
+
+    match /reports/{reportId} {
+      allow get: if isSignedIn() && isValidId(reportId) && (existing().reporterId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (
+        resource.data.reporterId == request.auth.uid ||
+        isAdmin()
+      );
+
+      allow create: if isSignedIn() &&
+                       isValidId(reportId) &&
+                       isValidReport(incoming()) &&
+                       incoming().reporterId == request.auth.uid &&
+                       incoming().status == 'Open' &&
+                       incoming().createdAt is timestamp &&
+                       incoming().createdAt <= request.time;
+
+      allow update: if isSignedIn() &&
+                       isValidId(reportId) &&
+                       isValidReport(incoming()) &&
+                       incoming().reporterId == existing().reporterId &&
+                       incoming().createdAt == existing().createdAt &&
+                       isAdmin();
+
+      allow delete: if isAdmin();
+    }
+  }
+}

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@500;600;700&amp;family=Space+Grotesk:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "inverse-on-surface": "#2f3033", "secondary-container": "#42474c", "on-primary-fixed-variant": "#304f00", "on-background": "#e2e2e5", "on-error-container": "#ffdad6", "outline": "#8d937f", "inverse-surface": "#e2e2e5", "surface-container-high": "#282a2c", "outline-variant": "#434938", "surface-dim": "#121416", "inverse-primary": "#416900", "on-surface": "#e2e2e5", "on-tertiary-fixed-variant": "#00522f", "surface-container-highest": "#333537", "secondary-fixed": "#dfe3e8", "surface-bright": "#38393c", "surface": "#121416", "primary": "#fdfff2", "error": "#ffb4ab", "on-surface-variant": "#c2c9b3", "surface-container-lowest": "#0c0e10", "on-primary-fixed": "#102000", "tertiary": "#fcfff9", "primary-container": "#b8f36b", "tertiary-container": "#8cf7b5", "on-secondary-fixed-variant": "#42474c", "tertiary-fixed-dim": "#71db9c", "tertiary-fixed": "#8ef8b6", "on-secondary": "#2c3135", "surface-container-low": "#1a1c1e", "surface-tint": "#9ed753", "error-container": "#93000a", "secondary": "#c2c7cc", "on-secondary-fixed": "#171c20", "primary-fixed-dim": "#9ed753", "on-tertiary": "#00391f", "on-primary": "#203700", "surface-variant": "#333537", "on-tertiary-fixed": "#002110", "primary-fixed": "#b9f46c", "surface-container": "#1e2022", "on-primary-container": "#456f00", "on-error": "#690005", "on-tertiary-container": "#007343", "background": "#121416", "secondary-fixed-dim": "#c2c7cc", "on-secondary-container": "#b1b6bb" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "gutter": "0.75rem", "space-xs": "0.25rem", "margin": "1rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-xl": "2rem", "space-md": "1rem" }, fontFamily: { "headline-xl": ["Space Grotesk"], "body-sm": ["Inter"], "headline-xl-mobile": ["Space Grotesk"], "body-md": ["Inter"], "body-lg": ["Inter"], "label-sm": ["JetBrains Mono"], "headline-md": ["Space Grotesk"], "headline-lg": ["Space Grotesk"], "label-lg": ["JetBrains Mono"], "headline-sm": ["Space Grotesk"], "label-md": ["JetBrains Mono"], "currency-display": ["JetBrains Mono"] }, fontSize: { "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-xl-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-sm": ["10px", { "lineHeight": "14px", "letterSpacing": "0.06em", "fontWeight": "500" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg": ["24px", { "lineHeight": "30px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "0em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "500" }], "currency-display": ["24px", { "lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-low/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.3)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="TAN PLAY Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrCJmJpMM_9RBzzNQ6CD-uUmyYvnA-qjRTQOxeJcI5pKXc_sH68m4L-dZ71sQjBYicbAbUe-5b9ljO-02BCLz8iH8mtmFExs9S1GvZ5tIrpbCF-H7DWPdq0Z-M_xAC8WwgOdm-Njhl-y3Sql1LS_f8pVmtdN_foKN1wJw77otuLzUwkN5-Nm7nnCrdwJiJNICY2ZDYk9fhBMHP3MrH1ttjDD0fCxGIFok3iTKS9Impfw"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-on-surface uppercase tracking-wider truncate">TAN PLAY</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest truncate">My Games</span></div></div><div class="flex items-center gap-space-sm shrink-0"><a class="flex items-center gap-1 bg-surface-container-highest/80 hover:bg-surface-container-highest px-2.5 py-1.5 rounded-full transition-colors" data-path="wallet" href="#"><span class="font-label-sm text-label-sm text-primary-container font-semibold">৳</span><span class="font-label-md text-label-md text-primary-container font-bold">850</span></a><button class="relative w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-low"></span></button><a class="relative w-11 h-11 flex items-center justify-center" data-path="profile" href="#"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChbQNuOvGbv5_5EpEbCuGgvitfe8lWAf_7goPLjoeqZBbZAYdua12nvBuGTrdUosAmzgh4FIpi7iWBp4jJAxYYfWMFgeuyB5aJvm-nCHUwdxiIrhhDymXZKB1_92TgBDrb7dx12lATutJaaRYtB588QPcXT11OaVU4kvbqChUt5sYbFit9504Zur2GgXwZ0MZ-FYL8a0x_WFxsReugJbfwp7U1d6oVmVSyrQH27-I"/></a></div></div></header><main class="flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full pb-8">
+<!-- Dynamic Ambience Layer -->
+<div class="relative w-full overflow-hidden">
+<!-- Top Context & Tournament Meta Bar -->
+<div class="px-margin pt-space-sm pb-space-md flex flex-col gap-space-sm bg-surface-container-low/60 backdrop-blur-md">
+<div class="flex items-center justify-between gap-space-xs">
+<a class="inline-flex items-center gap-1.5 text-secondary hover:text-on-surface transition-colors py-1" href="#">
+<span class="material-symbols-outlined text-[18px]">arrow_back</span>
+<span class="font-label-md text-label-md">Tournaments</span>
+</a>
+<div class="flex items-center gap-1.5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-surface-container-highest text-primary-container font-label-sm text-label-sm shadow-[0_0_12px_rgba(184,243,107,0.2)]">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+            LIVE SEMIS
+          </span>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-all active:scale-95" id="findMatchBtn">
+<span class="material-symbols-outlined text-[16px] text-primary-container">my_location</span>
+<span>My Match</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-primary-container font-label-sm text-[10px] uppercase font-bold tracking-wider">Bo3 Bracket</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">sports_soccer</span> FC Mobile
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mt-0.5">Independence Cup 2025</h1>
+</div>
+<!-- Quick Stats Strip -->
+<div class="grid grid-cols-3 gap-2 p-2.5 rounded-xl bg-surface-container-lowest">
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Format</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">Single Elim • 32p</span>
+</div>
+<div class="flex flex-col border-l border-surface-container-highest/40 pl-2">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Total Pool</span>
+<span class="font-label-md text-label-md text-primary-container font-bold font-currency-display">৳ 7,880</span>
+</div>
+<div class="flex flex-col border-l border-surface-container-highest/40 pl-2">
+<span class="font-label-sm text-[10px] text-on-surface-variant uppercase">Your Seed</span>
+<span class="font-label-md text-label-md text-on-surface font-medium flex items-center gap-1">
+            #04 <span class="px-1 rounded bg-primary-container/20 text-primary-container text-[10px] font-bold">PRO</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Pinned User Active Match Callout -->
+<div class="px-margin mt-3">
+<div class="relative overflow-hidden rounded-xl bg-surface-container-high p-3.5 shadow-[0_4px_24px_rgba(0,0,0,0.5)]">
+<!-- Live status bar -->
+<div class="flex items-center justify-between mb-3 pb-2 border-b border-surface-container-highest/60">
+<div class="flex items-center gap-2 min-w-0">
+<span class="flex h-2 w-2 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-error opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-error"></span>
+</span>
+<span class="font-label-sm text-label-sm font-semibold tracking-wider text-error uppercase truncate">
+              Match In Progress • Game 2 of Bo3
+            </span>
+</div>
+<span class="font-label-sm text-[11px] px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-mono">
+            Room: #8849201
+          </span>
+</div>
+<!-- Head-to-Head Duelists -->
+<div class="grid grid-cols-11 items-center gap-1">
+<!-- User / Contender 1 -->
+<div class="col-span-5 flex items-center gap-2 min-w-0">
+<div class="relative shrink-0">
+<div class="w-10 h-10 rounded-lg overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover" data-alt="Cyberpunk male esport athlete avatar with glowing neon visor, dark cinematic lighting, green neon accent backlight, vector stylized esports badge" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbrB128GvL-V92OnyI4rD_YACWuUcfP0jN0iyAdX82ufc-jDvfGXZR8Gcs2jznwDtapIFI8_aOfLOEkIq8CCLruK-kBe0ndckOhTEAwsl35ZRyNJKs9lhytBIpxNbeHDbKZl0hYnTf97Ft5hC4hlJ8otYKNcduV3cZvx8jGAvNjc0LFuClC_JWNH4rNjDc485Iee2KmKkAMVrcuYla9HlU1cXbUwSWasmPMEoATAw"/>
+</div>
+<span class="absolute -top-1.5 -left-1.5 px-1 rounded bg-primary-container text-on-primary-container font-label-sm text-[9px] font-bold shadow-sm">YOU</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1">
+<span class="font-headline-sm text-sm font-bold text-on-surface truncate">TanvirX</span>
+<span class="text-[12px]" title="Bangladesh">🇧🇩</span>
+</div>
+<span class="font-label-sm text-[10px] text-primary-container font-mono">1,840 ELO • Master</span>
+</div>
+</div>
+<!-- Live Series Scoreboard -->
+<div class="col-span-1 flex flex-col items-center justify-center">
+<div class="px-2 py-1 rounded bg-surface-container-lowest text-center">
+<span class="font-currency-display text-base text-primary-container tracking-wider font-bold">1:0</span>
+</div>
+<span class="font-label-sm text-[9px] text-on-surface-variant uppercase mt-0.5">Series</span>
+</div>
+<!-- Contender 2 -->
+<div class="col-span-5 flex items-center justify-end gap-2 min-w-0 text-right">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center justify-end gap-1">
+<span class="text-[12px]" title="Bangladesh">🇧🇩</span>
+<span class="font-headline-sm text-sm font-bold text-on-surface truncate">DarkKnight</span>
+</div>
+<span class="font-label-sm text-[10px] text-secondary font-mono">2,050 ELO • Grandmaster</span>
+</div>
+<div class="w-10 h-10 shrink-0 rounded-lg overflow-hidden bg-surface-container-lowest">
+<img class="w-full h-full object-cover" data-alt="Aggressive shadowy esports gamer avatar with futuristic mask and glowing crimson eyes, dark aesthetic, vector profile illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmETX46pQbFQVWh-vx7_CzMDYeAzzwbfrBX_7UoEuEUTXlhkU4aHPMl1mK8goyi9Pq58akcLoNEKavAWB0n8K3g5N5u4VhOhmvItbUqgzQsbTK49jQy70lbatRGuqLyi8XOA8dihsPFgCIXKsvwJI7eZ61v8nox9imwoQmIUZ4paocpZhHhYgh4IJnmJMFsmZ4LKQy9mlG1oX0HHw1frI7qhirWkgVHMnbAIHimyA"/>
+</div>
+</div>
+</div>
+<!-- Room Action Micro-Strip & CTAs -->
+<div class="mt-3 pt-2.5 flex items-center gap-2">
+<button class="flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container hover:bg-surface-container-highest text-on-surface font-label-sm text-label-sm active:scale-95 transition-all" id="copyRoomBtn">
+<span class="material-symbols-outlined text-[16px] text-secondary">content_copy</span>
+<span id="copyText">Copy Room ID</span>
+</button>
+<a class="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md font-bold shadow-[0_4px_16px_rgba(184,243,107,0.25)] hover:opacity-90 active:scale-[0.98] transition-all" href="#">
+<span class="material-symbols-outlined text-[18px]">play_circle</span>
+<span>Join Room #8849</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Round Selector Bar (Sticky Filter) -->
+<div class="mt-4 px-margin">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Tournament Stages</span>
+<span class="font-label-sm text-[11px] text-primary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">touch_app</span> Drag Bracket Horizontally
+        </span>
+</div>
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1">
+<button class="round-tab px-3 py-1.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface transition-all flex items-center gap-1" data-round="r16">
+<span>Round of 16</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span>
+</button>
+<button class="round-tab px-3 py-1.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface transition-all flex items-center gap-1" data-round="qf">
+<span>Quarter-Finals</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span>
+</button>
+<button class="round-tab px-3.5 py-1.5 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm font-bold whitespace-nowrap shadow-[0_0_12px_rgba(184,243,107,0.3)] transition-all flex items-center gap-1.5" data-round="sf">
+<span class="w-1.5 h-1.5 rounded-full bg-on-primary-container animate-ping"></span>
+<span>Semi-Finals (Live)</span>
+</button>
+<button class="round-tab px-3 py-1.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface transition-all" data-round="gf">
+<span>Grand Final (10 PM)</span>
+</button>
+<button class="round-tab px-3 py-1.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface transition-all" data-round="third">
+<span>3rd Place Playoff</span>
+</button>
+</div>
+</div>
+<!-- Visual Bracket Tree Diagram (Interactive Horizontal Scroll) -->
+<div class="mt-3 relative w-full overflow-hidden">
+<!-- Gradient Edge Indicators for mobile pan hint -->
+<div class="pointer-events-none absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-surface to-transparent z-10"></div>
+<div class="pointer-events-none absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-surface to-transparent z-10"></div>
+<!-- Scroll Canvas -->
+<div class="w-full overflow-x-auto overflow-y-hidden px-margin py-2 flex gap-8 items-stretch select-none cursor-grab active:cursor-grabbing" id="bracketScrollArea">
+<!-- COLUMN 1: QUARTER-FINALS (COMPLETED) -->
+<div class="flex flex-col gap-4 shrink-0 w-64">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider">Quarter-Finals</span>
+<span class="font-label-sm text-[10px] text-secondary">Bo3 • Ended</span>
+</div>
+<!-- QF 1 (You vs BD_Rider) -->
+<div class="relative flex flex-col rounded-xl bg-surface-container p-2.5 gap-1.5 shadow-sm">
+<!-- Team 1 (Winner - User) -->
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container-high">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">#04</span>
+<div class="w-6 h-6 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Icon of gamer TanvirX with green visor helmet stylized digital illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDX7DPQvqe4hJisZOkDMKpcrwFKvFIipL1kcGccUrKifsFlogZ_tfik0e698Isw29jH5BTTx3zbTT_CIETt7SSFN91yMRHRl_YkmTAAwlUOri1cqviQGetMqWnhs-Br0P5OfS0UCDEYocr14tksTlsX4EwBB2AtBYZeLSCKDSjwNpTFUtLHpvp-cYk4fz7WCdOLypWiXLTm6nrdPR-xspufuI2XAlInkGCs7wN3G00"/>
+</div>
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">TanvirX</span>
+<span class="px-1 rounded bg-primary-container/20 text-primary-container text-[9px] font-bold">YOU</span>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<span class="font-label-md text-label-md font-bold text-primary-container font-mono">2</span>
+<span class="material-symbols-outlined text-[16px] text-primary-container">check</span>
+</div>
+</div>
+<!-- Team 2 (Loser) -->
+<div class="flex items-center justify-between p-1.5 rounded-lg opacity-40">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">#13</span>
+<div class="w-6 h-6 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Motorcycle racer helmet esports avatar icon, dark neon gamer emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV3uTWWAhJtIm8pVTGsA0UQa0VYdNJvs8DN2ujcmGoHZr-GdFuHwsGmbfo_Pvjkpa-9B0YxroU-f_VPqQBmvUlgMENT6CCNn4KBOCTxkSQxOpxjEGVCbSYvy5svuBIRpe9MxVa9WetUTSEH5n-7RKMzy5NaNRoI7jagYOffkYS5RhMNUD9KjKwTmeVrlFJiwTi5TwGItw85hu5TZqSmDDKBjh330SPKZa-QOIPqhU"/>
+</div>
+<span class="font-headline-sm text-xs font-medium text-on-surface truncate">BD_Rider</span>
+</div>
+<span class="font-label-md text-label-md font-mono text-secondary">0</span>
+</div>
+</div>
+<!-- QF 2 (DarkKnight vs Apex_Predator) -->
+<div class="relative flex flex-col rounded-xl bg-surface-container p-2.5 gap-1.5 shadow-sm">
+<!-- Team 1 (Winner) -->
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container-high">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">#01</span>
+<div class="w-6 h-6 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Dark knight shadowy avatar icon with dark crimson glow, esports icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJNKRjlwDy1G__6j-pD0RPhwPgbKhuotCAcqfymvlj_kV3481WghqYPkBODzr_ZL7X9-Pq_YqD4qpC0MhPXNgdj8gypgyz2ZHF7p7ytw3yQjKA3p5kl9b7Qhlok1pwThvFAVF6neENq-C3YXJJz4YKZ6Kdo3-PdDn1hYuLQzsAYfA1c4t6C8IktfoAOVegK-bmOlEYYF2p_ljSnxwhO7gkCKmzoiPgHZWoxNIVFFo"/>
+</div>
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">DarkKnight</span>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<span class="font-label-md text-label-md font-bold text-primary-container font-mono">2</span>
+<span class="material-symbols-outlined text-[16px] text-primary-container">check</span>
+</div>
+</div>
+<!-- Team 2 (Loser) -->
+<div class="flex items-center justify-between p-1.5 rounded-lg opacity-40">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">#08</span>
+<div class="w-6 h-6 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Apex wolf predator esports gamer portrait graphic illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNZUTAutb-M_O1rM612QeF2vzHQ1o4VoQuYc5WAUtJ2WfiZSUm8vt-IkymI5GnBehwZYjYRnBDbYw9SP0ojJYha4WNm7Lnjk9VDU34171kuTzYwbI4UktnG6GH5HSmPf9MF2WFAYb3HS2Cc8Lb6jw6uIMdd5h1pYw7K3ayXUyXv0y43iMNK8GHbmtDcE8xYB3_aPDOVqu52fXioTdaNjI6PMg0kJfkwIBMf2T-q0w"/>
+</div>
+<span class="font-headline-sm text-xs font-medium text-on-surface truncate">Apex_Pred</span>
+</div>
+<span class="font-label-md text-label-md font-mono text-secondary">1</span>
+</div>
+</div>
+<!-- QF 3 (Shakib_Pro vs Fahim_Striker) -->
+<div class="relative flex flex-col rounded-xl bg-surface-container p-2.5 gap-1.5 shadow-sm">
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container-high">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">#02</span>
+<div class="w-6 h-6 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Golden lion esports mascot avatar badge, futuristic vector art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT82s--yt2i1TNWcJUvN5pfEBKL7qXXh_ege-qEsisi37AtfFLoqYiYlTEa371y2EzKEntBY4O4rb-MSD1fLSgisNyxI6gKvkyGTye670cSM7XvRhsweCaDHxiRfDISGJpxtPM1w9U_KujGeY3Q92CKi8zsaqSI2-s6M3gz77w5DsJ35-zJucbvkUWV7zZMm806CyMrZg3VU5pPoCARdpkt8jSXZK6rkow1afikzg"/>
+</div>
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">Shakib_Pro</span>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<span class="font-label-md text-label-md font-bold text-primary-container font-mono">2</span>
+<span class="material-symbols-outlined text-[16px] text-primary-container">check</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-lg opacity-40">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">#07</span>
+<div class="w-6 h-6 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Cyber soccer striker with gold goggles vector avatar icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcxG5RugFUMr9VXb4XpV-HOST7J2aNdGTRrbaP2DnrDqzUKhh2eIMIau3Fcn-roazhr7OyfrebWoU8U5OFBUPUq-6i8fZIRZsyRcNqyqX3dZgX4kQnyeodoustLxzqODfm40mvqW97JmWtevXPJrakIO0YbkuMtTprMM27XcVHCG50McBBqGJJhNSpTERJBFwrWoyaoh3skAJixznzoyo7dZJ0jwb2Jyn5tDdCVgg"/>
+</div>
+<span class="font-headline-sm text-xs font-medium text-on-surface truncate">Fahim_Striker</span>
+</div>
+<span class="font-label-md text-label-md font-mono text-secondary">1</span>
+</div>
+</div>
+<!-- QF 4 (BengalTiger vs SilentKiller) -->
+<div class="relative flex flex-col rounded-xl bg-surface-container p-2.5 gap-1.5 shadow-sm">
+<div class="flex items-center justify-between p-1.5 rounded-lg bg-surface-container-high">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">#03</span>
+<div class="w-6 h-6 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Royal Bengal tiger with neon cyber stripes esports emblem avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsJVYjdU8i6u-YtcRZhWCRv0ejOVMBrZGLf8PcyeQ4uVDaM6Nl9vnuNTGULZ8sk4xP_gqCSsjbYb_DBQVbaY0AkGgJsSchvm4We7mpGNeXFsFz5PIhRAbql27qskZ-jxOVQ5DO216lOO7v0q6p21JfDYHjr2JCmhDCceriXUJe5WW6K7Rv3RPfk9Ltl8oeuVu2iuUG2xjdX0qnMIr4ssXlmM68womEXYI1IsVCFz8"/>
+</div>
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">BengalTiger</span>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<span class="font-label-md text-label-md font-bold text-primary-container font-mono">2</span>
+<span class="material-symbols-outlined text-[16px] text-primary-container">check</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-1.5 rounded-lg opacity-40">
+<div class="flex items-center gap-2 min-w-0">
+<span class="font-label-sm text-[10px] text-on-surface-variant font-mono">#11</span>
+<div class="w-6 h-6 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Ninja assassin hooded gamer avatar vector cyber art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXljhMPZI0DG7uIvIBG2vCTIOo2OBTRTrawMpc39a77UsRuHXMFiP_wCZ2j7VqZhRPb1xoyOBuMHIjfgh5uEsI6yu87Iry-1FOnY5IkeEOdIQACfQ_dNorX6F_jdeRs5zTASkmFGawkFcAlAGx2R0ie3dBI0yWcuWbW8zmBbwnOUpZ0gsa9GURU3O7By3I5H-6OFfj7jW-bE3s319aXd_s8EgB-qMfTy8RiiWOKrY"/>
+</div>
+<span class="font-headline-sm text-xs font-medium text-on-surface truncate">SilentKiller</span>
+</div>
+<span class="font-label-md text-label-md font-mono text-secondary">0</span>
+</div>
+</div>
+</div>
+<!-- COLUMN 2: SEMI-FINALS (CURRENT ACTIVE) -->
+<div class="flex flex-col gap-8 shrink-0 w-72 justify-around" id="sfSection">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+<span class="font-label-sm text-label-sm font-bold text-primary-container uppercase tracking-wider">Semi-Finals</span>
+</div>
+<span class="font-label-sm text-[10px] text-primary-container font-bold">2 Matches</span>
+</div>
+<!-- SF 1 (USER ACTIVE MATCH - HIGHLIGHTED) -->
+<div class="relative flex flex-col rounded-xl bg-surface-container-high p-3 gap-2 shadow-[0_0_20px_rgba(184,243,107,0.18)]" id="userMatchNode">
+<div class="flex items-center justify-between pb-1.5 border-b border-surface-container-highest/60">
+<span class="font-label-sm text-[10px] uppercase font-bold text-primary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">sensors</span> Match SF-1 • Live
+              </span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Bo3 Series</span>
+</div>
+<!-- Team 1 (User) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-highest/80">
+<div class="flex items-center gap-2 min-w-0">
+<div class="relative shrink-0">
+<div class="w-7 h-7 rounded bg-surface-container-lowest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="TanvirX esports profile icon neon visor gamer badge" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUbLv3dJKRJK4KwvDoUbUUrhIMXxvfrguHy825UGLzxOupzKpRj8mGzjrhOBrTw-X03RvCvn35vgILlyfQtt68QVYn1ZY9wS7navy-aJxk2A9IMkj5iRpSnqpWVIeqjrfxHTNQyMqueJiv2fOfVsDXPiJjYCVIQ-gPKaeif81fdV_UVciKKhj-hE2fXYwnMd8mY9z9m2UVJIwVqZDwq_HNqpjuK5Gtkyl00uTfAuQ"/>
+</div>
+<span class="absolute -bottom-1 -right-1 w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-xs font-bold text-on-surface truncate">TanvirX</span>
+<span class="font-label-sm text-[9px] text-primary-container">Seed #04 (YOU)</span>
+</div>
+</div>
+<span class="font-label-lg text-sm font-bold text-primary-container font-mono px-2 py-0.5 rounded bg-surface-container-lowest">1</span>
+</div>
+<!-- Team 2 (DarkKnight) -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Dark knight profile icon crimson glow esports emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO0tsAhY7ZI3dTHcW-w86vf7mSOZoW0oqXbW1ezflktwVuMful8S332IJcczX53ZhdS7Q0CMD3llr_U3b7werPH_9VWj8899h0GqRgT4y5p1XGxg1TUbMI8UmwQK4KdIqZOyDIPB7aVCdyZINrlu1dnL_3lu2_1KFvXzWMwc3-Z8bQIeLAtL1OJsREiengEKFZxQObD25XeaL6kVLv3tB6PKycazgwpVK67xSSdeI"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">DarkKnight_BD</span>
+<span class="font-label-sm text-[9px] text-secondary">Seed #01</span>
+</div>
+</div>
+<span class="font-label-lg text-sm font-bold text-secondary font-mono px-2 py-0.5 rounded bg-surface-container-lowest">0</span>
+</div>
+<div class="pt-1 flex items-center justify-between text-[11px] font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1 text-primary-container font-medium">
+<span class="material-symbols-outlined text-[14px]">sports_esports</span> Game 2 Ongoing
+              </span>
+<a class="text-primary-container hover:underline font-bold" href="#">Enter Room →</a>
+</div>
+</div>
+<!-- SF 2 (Upcoming Match) -->
+<div class="relative flex flex-col rounded-xl bg-surface-container p-3 gap-2 shadow-sm">
+<div class="flex items-center justify-between pb-1.5 border-b border-surface-container-highest/40">
+<span class="font-label-sm text-[10px] uppercase font-semibold text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">schedule</span> Match SF-2
+              </span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Starts 9:00 PM</span>
+</div>
+<!-- Contender A -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high/60">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Golden lion esports mascot avatar badge illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7Qzf-AlrZ91Xdq3vUuWNbYl4c1IGvEg1mGdWHztTI3x7go7X0IBAO8kRVc84tBzLJXifhRrk8SbgDDP17suk6gAfn29s_bJLuV_R8m2szZP_m1v2cpX0GHkDtkaJvXg9s8P1pniTCPaj2Fiho445WKDA-vzRUo1I1y9DLjqM_0PMedE3FyVby8EIjNvE3kEbqomkvHhfWamBnmYxi74foYsOOl3cEc7yFRWVSO1c"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">Shakib_Pro</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant">Seed #02</span>
+</div>
+</div>
+<span class="font-label-sm text-xs font-mono text-on-surface-variant">-</span>
+</div>
+<!-- Contender B -->
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-high/60">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded bg-surface-container-lowest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Royal Bengal tiger with cyber stripes avatar emblem" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-nO0m3B-_TFG2SgQsjYQgPAtTvXVDrO-nNO3tX-pURQsipeNeoVoohnnzqkm3F_PvAlygZ9Nr2unCP3iuLayr1nt2AYJ7TWur8YktmXTubsqTi5VEaSKuZZqnPdoSdUdP82y8bemPu0w9lbXgOC7gqeWZ1f9YwT6YffQlOdF-iCANt4Jqqm8pUYtJLKGWslX6ejrkAMTE0JoKIaGxnxlExl1yMTD5YjbdZGw0uzg"/>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">BengalTiger_99</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant">Seed #03</span>
+</div>
+</div>
+<span class="font-label-sm text-xs font-mono text-on-surface-variant">-</span>
+</div>
+<div class="pt-1 flex items-center justify-between text-[11px] font-label-sm text-on-surface-variant">
+<span>Waiting for SF-1 finish</span>
+<button class="text-secondary hover:text-on-surface flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[14px]">notifications</span> Notify
+              </button>
+</div>
+</div>
+</div>
+<!-- COLUMN 3: GRAND FINAL (UPCOMING / TROPHY CROWN) -->
+<div class="flex flex-col gap-4 shrink-0 w-72 justify-center">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary-container">emoji_events</span> Grand Final
+            </span>
+<span class="font-label-sm text-[10px] text-primary-container font-mono">10:00 PM BST</span>
+</div>
+<!-- Championship Node Card -->
+<div class="relative overflow-hidden rounded-xl bg-surface-container-high p-3.5 flex flex-col gap-2.5 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+<!-- Background Trophy Glow Art -->
+<div class="flex items-center justify-between bg-surface-container-lowest p-2 rounded-lg">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">military_tech</span>
+</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-[10px] text-secondary uppercase tracking-wider">Champion Prize</span>
+<span class="font-currency-display text-sm font-bold text-primary-container">৳ 4,728 + Cup</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-sm text-[10px]">Bo5 Final</span>
+</div>
+<!-- TBD Finalist 1 (Winner SF-1) -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[16px]">help</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">Winner of SF-1</span>
+<span class="font-label-sm text-[9px] text-primary-container">TanvirX or DarkKnight</span>
+</div>
+</div>
+<span class="font-label-sm text-xs text-on-surface-variant font-mono">TBD</span>
+</div>
+<div class="flex items-center justify-center text-secondary font-label-sm text-[11px] font-bold">VS</div>
+<!-- TBD Finalist 2 (Winner SF-2) -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-7 h-7 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[16px]">help</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-headline-sm text-xs font-semibold text-on-surface truncate">Winner of SF-2</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant">Shakib_Pro or BengalTiger</span>
+</div>
+</div>
+<span class="font-label-sm text-xs text-on-surface-variant font-mono">TBD</span>
+</div>
+<button class="w-full py-2 rounded-lg bg-surface-container hover:bg-surface-container-highest text-secondary hover:text-on-surface font-label-sm text-label-sm font-semibold transition-all flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">notifications_active</span>
+<span>Set Grand Final Reminder</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Prize Breakdown & Instant Payout Guarantee Bento Card -->
+<div class="px-margin mt-4">
+<div class="rounded-xl bg-surface-container p-3.5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary-container text-[18px]">verified</span>
+<span class="font-headline-sm text-sm text-on-surface font-bold">Prize Distribution &amp; Escrow</span>
+</div>
+<span class="font-label-sm text-[10px] text-primary-container bg-primary-container/10 px-2 py-0.5 rounded-full font-semibold">
+            bKash / Nagad Instant
+          </span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<!-- 1st Place -->
+<div class="flex flex-col p-2.5 rounded-lg bg-surface-container-high">
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-primary-container text-[16px]">workspace_premium</span>
+<span class="font-label-sm text-[10px] text-primary-container font-bold">1st (60%)</span>
+</div>
+<span class="font-currency-display text-sm font-bold text-on-surface">৳ 4,728</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant truncate mt-0.5">+ Gold Master Trophy</span>
+</div>
+<!-- 2nd Place -->
+<div class="flex flex-col p-2.5 rounded-lg bg-surface-container-high">
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-secondary text-[16px]">shield</span>
+<span class="font-label-sm text-[10px] text-secondary font-bold">2nd (25%)</span>
+</div>
+<span class="font-currency-display text-sm font-bold text-on-surface">৳ 1,970</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant truncate mt-0.5">+ Silver Shield</span>
+</div>
+<!-- 3rd Place -->
+<div class="flex flex-col p-2.5 rounded-lg bg-surface-container-high">
+<div class="flex items-center gap-1 mb-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">stars</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant font-bold">3rd (15%)</span>
+</div>
+<span class="font-currency-display text-sm font-bold text-on-surface">৳ 1,182</span>
+<span class="font-label-sm text-[9px] text-on-surface-variant truncate mt-0.5">+ Bronze Medal</span>
+</div>
+</div>
+<!-- Escrow reassurance micro-banner -->
+<div class="flex items-center gap-2 p-2 rounded-lg bg-surface-container-lowest text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary-container shrink-0">shield_lock</span>
+<p class="font-body-sm text-[11px] leading-tight">
+            Prizes are held in TAN PLAY Smart Escrow. Winnings transfer directly to your wallet within 60 seconds of tournament completion.
+          </p>
+</div>
+</div>
+</div>
+<!-- Match Guidelines & Referee Assistance Drawer Toggle -->
+<div class="px-margin mt-3 flex items-center justify-between">
+<a class="font-label-sm text-[11px] text-secondary hover:text-on-surface flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]">gavel</span> Match Rules &amp; Fairplay Policy
+      </a>
+<a class="font-label-sm text-[11px] text-primary-container hover:underline flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]">headset_mic</span> Summon Referee
+      </a>
+</div>
+</div>
+</div>
+<script>
+  // Micro-interaction: Find My Match Button Scroll Focus
+  const findMatchBtn = document.getElementById('findMatchBtn');
+  const scrollArea = document.getElementById('bracketScrollArea');
+  const userMatchNode = document.getElementById('userMatchNode');
+  const sfSection = document.getElementById('sfSection');
+
+  if (findMatchBtn && scrollArea && sfSection) {
+    findMatchBtn.addEventListener('click', () => {
+      // Smooth scroll the bracket container to the Semi-Final column
+      const targetLeft = sfSection.offsetLeft - 24;
+      scrollArea.scrollTo({ left: targetLeft, behavior: 'smooth' });
+      
+      // Moment of delight: Pulse effect on user match node
+      if (userMatchNode) {
+        userMatchNode.classList.add('scale-[1.02]');
+        setTimeout(() => {
+          userMatchNode.classList.remove('scale-[1.02]');
+        }, 600);
+      }
+    });
+  }
+
+  // Micro-interaction: Copy Room ID feedback
+  const copyBtn = document.getElementById('copyRoomBtn');
+  const copyText = document.getElementById('copyText');
+  if (copyBtn && copyText) {
+    copyBtn.addEventListener('click', () => {
+      navigator.clipboard?.writeText('8849201');
+      const original = copyText.textContent;
+      copyText.textContent = 'Copied!';
+      copyBtn.classList.add('bg-primary-container', 'text-on-primary-container');
+      setTimeout(() => {
+        copyText.textContent = original;
+        copyBtn.classList.remove('bg-primary-container', 'text-on-primary-container');
+      }, 1500);
+    });
+  }
+
+  // Round tab navigation filter triggers
+  const tabs = document.querySelectorAll('.round-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', (e) => {
+      tabs.forEach(t => {
+        t.className = 'round-tab px-3 py-1.5 rounded-full bg-surface-container text-secondary font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface transition-all flex items-center gap-1';
+      });
+      tab.className = 'round-tab px-3.5 py-1.5 rounded-full bg-primary-container text-on-primary-container font-label-sm text-label-sm font-bold whitespace-nowrap shadow-[0_0_12px_rgba(184,243,107,0.3)] transition-all flex items-center gap-1.5';
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-low/90 backdrop-blur-xl shadow-[0_-1px_12px_rgba(0,0,0,0.4)]" data-active-classes="text-primary-container [text-shadow:0_0_12px_rgba(184,243,107,0.4)]"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center gap-0.5 w-14 h-14 text-secondary hover:text-on-surface transition-all" data-path="home" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-sm text-[10px] tracking-tight">Home</span></a><a class="flex flex-col items-center justify-center gap-0.5 w-14 h-14 text-secondary hover:text-on-surface transition-all" data-path="explore" href="#"><span class="material-symbols-outlined text-[22px]">explore</span><span class="font-label-sm text-[10px] tracking-tight">Explore</span></a><a class="flex flex-col items-center justify-center gap-0.5 w-14 h-14 text-secondary hover:text-on-surface transition-all" data-path="my-games" href="#"><span class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[22px]">sports_esports</span><span class="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-primary-container shadow-[0_0_6px_rgba(184,243,107,0.9)]"></span></span><span class="font-label-sm text-[10px] tracking-tight">My Games</span></a><a class="flex flex-col items-center justify-center gap-0.5 w-14 h-14 text-secondary hover:text-on-surface transition-all" data-path="wallet" href="#"><span class="material-symbols-outlined text-[22px]">account_balance_wallet</span><span class="font-label-sm text-[10px] tracking-tight">Wallet</span></a><a class="flex flex-col items-center justify-center gap-0.5 w-14 h-14 text-secondary hover:text-on-surface transition-all" data-path="profile" href="#"><span class="material-symbols-outlined text-[22px]">person</span><span class="font-label-sm text-[10px] tracking-tight">Profile</span></a></div></nav></body></html>

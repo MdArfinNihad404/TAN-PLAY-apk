@@ -1,0 +1,6 @@
+{
+  "name": "TAN PLAY",
+  "description": "100% free eSports tournament platform featuring custom tournament creation, team & solo registration, random/seeded/manual bracket draws, real-time visual brackets, match lobby verification, tournament chat, and admin moderation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

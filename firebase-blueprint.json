@@ -1,0 +1,247 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Authenticated player profile, role, saved game IDs, and privacy consent",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Firebase Auth UID" },
+        "username": { "type": "string", "description": "Unique display handle / gamer tag" },
+        "email": { "type": "string", "description": "Private user email address" },
+        "displayName": { "type": "string", "description": "Display name" },
+        "avatarInitial": { "type": "string", "description": "Single character avatar badge" },
+        "contactInfo": { "type": "string", "description": "Optional Discord/Telegram contact handle" },
+        "primaryGame": { "type": "string", "description": "Preferred eSports title" },
+        "role": { "type": "string", "enum": ["player", "organizer", "admin"] },
+        "freeFireUid": { "type": "string" },
+        "freeFireIgn": { "type": "string" },
+        "freeFireLevel": { "type": "string" },
+        "fcMobileUid": { "type": "string" },
+        "fcMobileOvr": { "type": "string" },
+        "efootballId": { "type": "string" },
+        "efootballPlatform": { "type": "string" },
+        "dlsTeamName": { "type": "string" },
+        "dlsTeamRating": { "type": "string" },
+        "pubgPlayerId": { "type": "string" },
+        "pubgNickname": { "type": "string" },
+        "termsAccepted": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "ServerTimestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "ServerTimestamp" }
+      },
+      "required": ["userId", "username", "role", "createdAt", "updatedAt"]
+    },
+    "Alert": {
+      "title": "Alert",
+      "description": "In-app notification for match ready, result confirmation, or tournament start",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "tournamentId": { "type": "string" },
+        "matchId": { "type": "string" },
+        "isRead": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "message", "isRead", "createdAt"]
+    },
+    "PlayerStat": {
+      "title": "PlayerStat",
+      "description": "Public non-PII competitive player statistics for rankings",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "gamerTag": { "type": "string" },
+        "primaryGame": { "type": "string" },
+        "matchesPlayed": { "type": "integer" },
+        "wins": { "type": "integer" },
+        "rating": { "type": "integer" },
+        "isPublic": { "type": "boolean" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "gamerTag", "matchesPlayed", "wins", "rating", "isPublic", "updatedAt"]
+    },
+    "Tournament": {
+      "title": "Tournament",
+      "description": "Free multi-user eSports tournament event",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "game": { "type": "string" },
+        "customGameName": { "type": "string" },
+        "customRequiredFields": { "type": "array" },
+        "description": { "type": "string" },
+        "rules": { "type": "string" },
+        "format": { "type": "string", "enum": ["Single Elimination", "Double Elimination", "Round Robin"] },
+        "participationType": { "type": "string", "enum": ["Individual", "Team"] },
+        "maxTeamSize": { "type": "integer" },
+        "maxParticipants": { "type": "integer" },
+        "participantCount": { "type": "integer" },
+        "registrationDeadlineText": { "type": "string" },
+        "startTimeText": { "type": "string" },
+        "matchDurationMinutes": { "type": "integer" },
+        "organizerId": { "type": "string" },
+        "organizerName": { "type": "string" },
+        "inviteCode": { "type": "string" },
+        "status": { "type": "string", "enum": ["Open", "In Progress", "Completed", "Cancelled"] },
+        "seedingMode": { "type": "string", "enum": ["Random", "Seeded", "Manual"] },
+        "roomId": { "type": "string" },
+        "roomPassword": { "type": "string" },
+        "isPublic": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "game", "format", "participationType", "maxParticipants", "participantCount", "organizerId", "inviteCode", "status", "isPublic", "createdAt", "updatedAt"]
+    },
+    "Participant": {
+      "title": "Participant",
+      "description": "Tournament registration entry with dynamic game-specific profile fields and audit log",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string" },
+        "userId": { "type": "string" },
+        "displayName": { "type": "string" },
+        "teamId": { "type": "string" },
+        "teamName": { "type": "string" },
+        "gameFields": { "type": "object" },
+        "publicStatLabel": { "type": "string" },
+        "sensitiveIdField": { "type": "string" },
+        "rankingMetric": { "type": "integer" },
+        "seedNumber": { "type": "integer" },
+        "auditLog": { "type": "array" },
+        "registeredAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["tournamentId", "userId", "displayName", "rankingMetric", "seedNumber", "registeredAt", "updatedAt"]
+    },
+    "Team": {
+      "title": "Team",
+      "description": "Team entry and roster for Team-based tournaments",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string" },
+        "name": { "type": "string" },
+        "teamCode": { "type": "string" },
+        "captainUserId": { "type": "string" },
+        "memberIds": { "type": "array" },
+        "memberNames": { "type": "array" },
+        "aggregatedStrength": { "type": "integer" },
+        "status": { "type": "string", "enum": ["Open", "Locked"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["tournamentId", "name", "teamCode", "captainUserId", "memberIds", "status", "createdAt"]
+    },
+    "Match": {
+      "title": "Match",
+      "description": "Visual bracket match node mapped to Firestore with real-time progression",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string" },
+        "organizerId": { "type": "string" },
+        "roundNumber": { "type": "integer" },
+        "roundName": { "type": "string" },
+        "matchNumber": { "type": "integer" },
+        "participant1Id": { "type": "string" },
+        "participant1UserId": { "type": "string" },
+        "participant1Name": { "type": "string" },
+        "participant1Stat": { "type": "string" },
+        "participant1GameId": { "type": "string" },
+        "participant2Id": { "type": "string" },
+        "participant2UserId": { "type": "string" },
+        "participant2Name": { "type": "string" },
+        "participant2Stat": { "type": "string" },
+        "participant2GameId": { "type": "string" },
+        "participant1Ready": { "type": "boolean" },
+        "participant2Ready": { "type": "boolean" },
+        "score1": { "type": "integer" },
+        "score2": { "type": "integer" },
+        "submittedByUserId": { "type": "string" },
+        "proofImageUri": { "type": "string" },
+        "proofNote": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "Scheduled", "Ready", "Awaiting Results", "Disputed", "Completed", "Cancelled"] },
+        "winnerParticipantId": { "type": "string" },
+        "winnerUserId": { "type": "string" },
+        "winnerName": { "type": "string" },
+        "nextMatchId": { "type": "string" },
+        "nextMatchSlot": { "type": "integer" },
+        "roomId": { "type": "string" },
+        "roomPassword": { "type": "string" },
+        "scheduledTimeText": { "type": "string" },
+        "auditLog": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["tournamentId", "organizerId", "roundNumber", "roundName", "matchNumber", "status", "createdAt", "updatedAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Scoped tournament chat message with anti-spam and moderation support",
+      "type": "object",
+      "properties": {
+        "tournamentId": { "type": "string" },
+        "senderId": { "type": "string" },
+        "senderName": { "type": "string" },
+        "text": { "type": "string" },
+        "isReported": { "type": "boolean" },
+        "reportReason": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["tournamentId", "senderId", "senderName", "text", "isReported", "createdAt"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "Dispute or abuse report escalated to organizers and platform admins",
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "tournamentId": { "type": "string" },
+        "matchId": { "type": "string" },
+        "reporterId": { "type": "string" },
+        "reporterName": { "type": "string" },
+        "reason": { "type": "string" },
+        "status": { "type": "string", "enum": ["Open", "Resolved", "Dismissed"] },
+        "resolutionNote": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["type", "tournamentId", "reporterId", "reason", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Private user profiles, roles, and saved game IDs"
+    },
+    "/users/{userId}/alerts/{alertId}": {
+      "schema": { "$ref": "#/entities/Alert" },
+      "description": "In-app notifications per user"
+    },
+    "/playerStats/{userId}": {
+      "schema": { "$ref": "#/entities/PlayerStat" },
+      "description": "Public competitive statistics without PII"
+    },
+    "/tournaments/{tournamentId}": {
+      "schema": { "$ref": "#/entities/Tournament" },
+      "description": "Free tournaments directory"
+    },
+    "/tournaments/{tournamentId}/participants/{participantId}": {
+      "schema": { "$ref": "#/entities/Participant" },
+      "description": "Tournament registrations and game-specific profiles"
+    },
+    "/tournaments/{tournamentId}/teams/{teamId}": {
+      "schema": { "$ref": "#/entities/Team" },
+      "description": "Registered teams for team tournaments"
+    },
+    "/tournaments/{tournamentId}/matches/{matchId}": {
+      "schema": { "$ref": "#/entities/Match" },
+      "description": "Visual bracket match nodes and results"
+    },
+    "/tournaments/{tournamentId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Tournament chat channel messages"
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/Report" },
+      "description": "Match disputes and abuse moderation queue"
+    }
+  }
+}
